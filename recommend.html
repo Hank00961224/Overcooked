@@ -170,6 +170,7 @@
         .btn.primary {
             background: #222;
             color: #fff;
+            border: 1px solid #333; /* 新增：與 .btn.secondary 一樣的外框 */
         }
         .btn.secondary {
             background: #181a1b;
@@ -179,6 +180,18 @@
         .btn:hover {
             background: #444;
             color: #fff;
+        }
+
+        /* 新增：置中表單末端按鈕（生成 / 重新設定）並使用 gap 控制間距 */
+        .search-form .form-group:last-child {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            transform: translateX(-0.35cm); /* 向右移 0.25cm（已修改） */
+        }
+        .search-form .form-group:last-child .btn {
+            margin-right: 0;
         }
 
         .photo-upload {
@@ -352,16 +365,6 @@
                     <input type="text" class="input" name="location" placeholder="輸入城市名稱" required>
                 </div>
 
-                <!-- 新增族群選擇 -->
-                <div class="form-group">
-                    <label>族群 / 膚色偏好（示意人物）</label>
-                    <select class="select" name="ethnicity">
-                        <option value="">不指定</option>
-                        <option value="asian">東方人 (Asian)</option>
-                        <option value="western">西方人 (Western)</option>
-                    </select>
-                </div>
-
                 <div class="form-group">
                     <button type="submit" class="btn primary">生成穿搭建議</button>
                     <button type="reset" class="btn secondary">重新設定</button>
@@ -458,31 +461,8 @@
             return '中性';
         }
 
-        // 修改 fetchPersonImage 以納入族群（ethnicity）與性別
-        async function fetchPersonImage(gender, base, ethnicity) {
-            let ethnicToken = '';
-            if (ethnicity === 'asian') ethnicToken = ' asian';
-            else if (ethnicity === 'western') ethnicToken = ' european';
-            const personQueries = [
-                `${gender}${ethnicToken} model ${base} outfit`,
-                `${gender}${ethnicToken} person wearing ${base} outfit`,
-                `${base} outfit on model ${ethnicToken}`,
-                `${gender}${ethnicToken} fashion model ${base}`,
-                `${gender}${ethnicToken} ${base} outfit`
-            ];
-            for (const q of personQueries) {
-                const r = await fetchOneImage(q);
-                if (r && r.image) return r;
-            }
-            return null;
-        }
-
-        // 強化示意人物搜尋：明確加上性別關鍵字
-        async function fetchPersonImage(gender, style, ethnicity, trend, occasion) {
-            let ethnicToken = '';
-            if (ethnicity === 'asian') ethnicToken = ' asian';
-            else if (ethnicity === 'western') ethnicToken = ' european';
-
+        // 統一 fetchPersonImage：移除 ethnicity，使用 gender/style/trend/occasion
+        async function fetchPersonImage(gender, style, trend, occasion) {
             let genderToken = '';
             if (gender === 'male') genderToken = 'male man';
             else if (gender === 'female') genderToken = 'female woman';
@@ -493,12 +473,12 @@
             const styleToken = style ? ` ${style}` : '';
 
             const personQueries = [
-                `${genderToken}${ethnicToken}${occasionToken}${trendToken}${styleToken} fashion model outfit`,
-                `${genderToken}${ethnicToken}${occasionToken}${styleToken} person wearing outfit`,
-                `${genderToken}${ethnicToken} fashion model${occasionToken}${trendToken}${styleToken}`,
-                `${genderToken}${ethnicToken}${occasionToken} outfit portrait`
+                `${genderToken}${occasionToken}${trendToken}${styleToken} fashion model outfit`,
+                `${genderToken}${occasionToken}${styleToken} person wearing outfit`,
+                `${genderToken} fashion model${occasionToken}${trendToken}${styleToken}`,
+                `${genderToken}${occasionToken} outfit portrait`
             ];
-            
+
             for (const q of personQueries) {
                 const r = await fetchOneImage(q);
                 if (r && r.image) return r;
@@ -506,34 +486,25 @@
             return null;
         }
 
-        // 優化 getOutfitsByStyle：搜尋詞只聚焦部位，不考慮搭配
-        async function getOutfitsByStyle(style, gender, ethnicity) {
-            // 若未選擇，預設簡約風 minimalist
+        // 優化 getOutfitsByStyle：移除 ethnicity，新增 trend/occasion 參數以便傳遞給 fetchPersonImage
+        async function getOutfitsByStyle(style, gender, trend, occasion) {
             const styleToken = (style && style.trim()) ? style.trim().toLowerCase() : 'minimalist';
 
-            // 族群 token（英文短詞，用於搜尋）
-            let ethToken = '';
-            if (ethnicity === 'asian') ethToken = ' asian';
-            else if (ethnicity === 'western') ethToken = ' european';
-
-            // 上身：shirt/top/jacket + upper body + minimalist
             const topsTerms = [
-                `${gender}${ethToken} upper body shirt ${styleToken}`,
-                `${gender}${ethToken} upper body top ${styleToken}`,
-                `${gender}${ethToken} upper body jacket ${styleToken}`
+                `${gender} upper body shirt ${styleToken}`,
+                `${gender} upper body top ${styleToken}`,
+                `${gender} upper body jacket ${styleToken}`
             ];
-            // 下身：pants/trousers/jeans/skirt + lower body + minimalist
             const bottomsTerms = [
-                `${gender}${ethToken} lower body pants ${styleToken}`,
-                `${gender}${ethToken} lower body trousers ${styleToken}`,
-                `${gender}${ethToken} lower body jeans ${styleToken}`,
-                `${gender}${ethToken} lower body skirt ${styleToken}`
+                `${gender} lower body pants ${styleToken}`,
+                `${gender} lower body trousers ${styleToken}`,
+                `${gender} lower body jeans ${styleToken}`,
+                `${gender} lower body skirt ${styleToken}`
             ];
-            // 飾品：necklace/bracelet/earrings + accessory + minimalist
             const accessoriesTerms = [
-                `${gender}${ethToken} accessory necklace ${styleToken}`,
-                `${gender}${ethToken} accessory bracelet ${styleToken}`,
-                `${gender}${ethToken} accessory earrings ${styleToken}`
+                `${gender} accessory necklace ${styleToken}`,
+                `${gender} accessory bracelet ${styleToken}`,
+                `${gender} accessory earrings ${styleToken}`
             ];
 
             async function fetchCategory(terms, fallbackKey) {
@@ -553,23 +524,23 @@
             ]);
 
             // 示意人物（維持原本邏輯）
-            const person = await fetchPersonImage(gender, styleToken, ethnicity);
+            const person = await fetchPersonImage(gender, styleToken, trend, occasion);
 
             return { tops, bottoms, accessories, person };
         }
 
-        // 修改 generateOutfit：顯示單件重點與以「人像示意」為主的整體搭配
+        // 修改 generateOutfit：不再讀取或使用 ethnicity
         async function generateOutfit(data) {
             const target = document.getElementById('outfitResult');
             target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>AI 正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
 
             try {
-                const ethnicity = data.ethnicity || '';
                 const trend = data.trend || '';
                 const occasion = data.occasion || '';
                 const style = data.style || '';
 
-                const groups = await getOutfitsByStyle(style, data.gender, ethnicity, trend, occasion);
+                // 傳遞 trend/occasion 給 getOutfitsByStyle
+                const groups = await getOutfitsByStyle(style, data.gender, trend, occasion);
 
                 const uploadedSrc = document.getElementById('photoPreview') && document.getElementById('photoPreview').src && document.getElementById('photoPreview').style.display !== 'none'
                     ? document.getElementById('photoPreview').src
