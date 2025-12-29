@@ -17,7 +17,9 @@
             --muted: #aaa;
         }
 
+
         * { box-sizing: border-box; }
+
 
         body {
             margin: 0;
@@ -31,6 +33,7 @@
             justify-content: center;
         }
 
+
         .container {
             width: 100vw;
             max-width: 1600px;
@@ -42,6 +45,7 @@
             margin-top: 56px;
         }
 
+
         .panel {
             background: var(--card);
             border-radius: 16px;
@@ -49,6 +53,7 @@
             box-shadow: 0 2px 16px rgba(0,0,0,0.12);
             border: 1px solid #222;
         }
+
 
         .title {
             font-size: 26px;
@@ -73,6 +78,7 @@
             box-shadow: 0 2px 16px rgba(0,0,0,0.18);
         }
 
+
         .composite-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -96,6 +102,7 @@
             background: #1a1c1d;
         }
 
+
         .back-home {
             position: fixed;
             left: 50%;
@@ -116,6 +123,7 @@
         .back-home:hover {
             background: #444;
         }
+
 
         .search-form {
             display: grid;
@@ -155,6 +163,7 @@
             box-shadow: 0 0 0 2px #333;
         }
 
+
         .btn {
             padding: 12px 24px;
             border-radius: 8px;
@@ -182,6 +191,7 @@
             color: #fff;
         }
 
+
         /* 新增：置中表單末端按鈕（生成 / 重新設定）並使用 gap 控制間距 */
         .search-form .form-group:last-child {
             grid-column: 1 / -1;
@@ -193,6 +203,7 @@
         .search-form .form-group:last-child .btn {
             margin-right: 0;
         }
+
 
         .photo-upload {
             background: #181a1b;
@@ -221,6 +232,7 @@
             color: var(--muted);
         }
 
+
         .loading-overlay {
             position: relative;
             min-height: 120px;
@@ -247,6 +259,7 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+
         @media (max-width: 980px) {
             .container {
                 grid-template-columns: 1fr;
@@ -264,16 +277,19 @@
     <!-- 移動返回按鈕到頂部中間 -->
     <a href="index.html" class="back-home">返回首頁</a>
 
+
     <div class="container">
         <!-- 左側結果面板 -->
         <div class="panel">
             <h1 class="title">今日穿搭推薦</h1>
             <p class="subtitle">根據您的個人特徵與當地天氣，為您推薦最適合的穿搭組合。</p>
 
+
             <div class="result-card">
                 <div id="outfitResult">
                     <!-- 動態生成穿搭預覽 -->
                 </div>
+
 
                 <!-- 天氣顯示區 -->
                 <div id="weatherInfo" style="margin-top:12px;color:var(--muted);font-size:14px">
@@ -282,10 +298,12 @@
             </div>
         </div>
 
+
         <!-- 右側設定面板 -->
         <div class="panel">
             <h2 class="title">搭配條件設定</h2>
             <p class="subtitle">請填寫以下資訊，讓我們為您推薦最適合的穿搭。</p>
+
 
             <!-- 修改：在表單中新增族群選擇 -->
             <form class="search-form" id="outfitForm">
@@ -299,6 +317,7 @@
                     </div>
                 </div>
 
+
                 <div class="form-group">
                     <label>性別</label>
                     <select class="select" name="gender" required>
@@ -307,6 +326,7 @@
                         <option value="unisex">中性風格</option>
                     </select>
                 </div>
+
 
                 <!-- 新增流行風格選擇 -->
                 <div class="form-group">
@@ -319,6 +339,7 @@
                         <option value="european">歐系</option>
                     </select>
                 </div>
+
 
                 <!-- 新增穿著喜好選擇 -->
                 <div class="form-group">
@@ -336,6 +357,7 @@
                     </select>
                 </div>
 
+
                 <div class="form-group">
                     <label>場合選擇</label>
                     <select class="select" name="occasion" required>
@@ -350,20 +372,24 @@
                     </select>
                 </div>
 
+
                 <div class="form-group">
                     <label>身高 (cm)</label>
                     <input type="number" class="input" name="height" placeholder="請輸入身高" required>
                 </div>
+
 
                 <div class="form-group">
                     <label>體重 (kg)</label>
                     <input type="number" class="input" name="weight" placeholder="請輸入體重" required>
                 </div>
 
+
                 <div class="form-group">
                     <label>所在地區</label>
                     <input type="text" class="input" name="location" placeholder="輸入城市名稱" required>
                 </div>
+
 
                 <div class="form-group">
                     <button type="submit" class="btn primary">生成穿搭建議</button>
@@ -373,10 +399,12 @@
         </div>
     </div>
 
+
     <script>
         // Unsplash 與 Pexels API Key（Pexels 可申請免費 key，這裡用 demo key）
         const UNSPLASH_ACCESS_KEY = 'AMSaKomiM1b5LLX57gpT-TxdE0TQ4kHCmaf_b4iORTI';
         const PEXELS_ACCESS_KEY = '563492ad6f91700001000001'; // demo key, 請換成自己的正式 key
+
 
         // 新增預設穿搭，以防 API 請求失敗
         const defaultOutfits = {
@@ -392,14 +420,15 @@
             ]
         };
 
+
         // 表單提交處理 + 取得天氣
         document.getElementById('outfitForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+           
             // 收集表單資料
             const formData = new FormData(e.target);
             const data = Object.fromEntries(formData);
-            
+           
             // 先嘗試取得地區天氣，再生成穿搭
             const weatherTarget = document.getElementById('weatherInfo');
             weatherTarget.textContent = '正在查詢天氣...';
@@ -411,47 +440,55 @@
                 console.warn(err);
             }
 
+
             // 生成穿搭建議
             generateOutfit(data);
         });
 
-        // 優化 fetchOneImage：先用 Unsplash，若失敗則用 Pexels
+
+        // 新增穩定的示意人物 fallback 圖（使用可直接 hotlink 的 Unsplash 圖）
+        const FALLBACK_PERSON_IMAGE = 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=60';
+
+
+        // 優化 fetchOneImage：回傳 source，並加入更多錯誤記錄以便 debug
         async function fetchOneImage(term) {
             // 先用 Unsplash
             try {
                 const res = await fetch(`https://api.unsplash.com/photos/random?query=${encodeURIComponent(term)}&orientation=portrait`, {
                     headers: { 'Authorization': `Client-ID ${UNSPLASH_ACCESS_KEY}` }
                 });
-                const j = await res.json();
-                if (j && j.urls && j.urls.regular) {
-                    return {
-                        image: j.urls.regular,
-                        name: j.alt_description || term,
-                        credit: j.user && j.user.name ? `Photo by ${j.user.name} on Unsplash` : ''
-                    };
+                if (!res.ok) {
+                    console.warn('Unsplash API returned', res.status, res.statusText, 'for term', term);
+                } else {
+                    const j = await res.json();
+                    if (j && j.urls && j.urls.regular) {
+                        return { image: j.urls.regular, name: j.alt_description || term, credit: j.user && j.user.name ? `Photo by ${j.user.name} on Unsplash` : '', source: 'unsplash' };
+                    }
                 }
             } catch (e) {
-                // 忽略
+                console.warn('Unsplash fetch failed for', term, e);
             }
             // 若 Unsplash 失敗，改用 Pexels
             try {
                 const res2 = await fetch(`https://api.pexels.com/v1/search?query=${encodeURIComponent(term)}&orientation=portrait&per_page=1`, {
                     headers: { 'Authorization': PEXELS_ACCESS_KEY }
                 });
-                const j2 = await res2.json();
-                if (j2 && j2.photos && j2.photos.length > 0) {
-                    const p = j2.photos[0];
-                    return {
-                        image: p.src && p.src.large ? p.src.large : null,
-                        name: p.alt || term,
-                        credit: p.photographer ? `Photo by ${p.photographer} on Pexels` : ''
-                    };
+                if (!res2.ok) {
+                    console.warn('Pexels API returned', res2.status, res2.statusText, 'for term', term);
+                } else {
+                    const j2 = await res2.json();
+                    if (j2 && j2.photos && j2.photos.length > 0) {
+                        const p = j2.photos[0];
+                        return { image: p.src && p.src.large ? p.src.large : null, name: p.alt || term, credit: p.photographer ? `Photo by ${p.photographer} on Pexels` : '', source: 'pexels' };
+                    }
                 }
             } catch (e) {
-                // 忽略
+                console.warn('Pexels fetch failed for', term, e);
             }
+            // 全部失敗 -> 回傳 null（呼叫者可用 fallback）
             return null;
         }
+
 
         // 小 helper：把性別值轉為中文顯示
         function genderLabelText(g) {
@@ -461,51 +498,91 @@
             return '中性';
         }
 
-        // 統一 fetchPersonImage：移除 ethnicity，使用 gender/style/trend/occasion
-        async function fetchPersonImage(gender, style, trend, occasion) {
-            let genderToken = '';
-            if (gender === 'male') genderToken = 'male man';
-            else if (gender === 'female') genderToken = 'female woman';
-            else genderToken = 'unisex person';
 
+        // 新增：根據表單 gender 產生多個查詢 token（提高命中正確性）
+        function genderTokens(gender) {
+            if (gender === 'male') return ["male", "man", "men", "men's", "male model"];
+            if (gender === 'female') return ["female", "woman", "women", "women's", "female model"];
+            return ["unisex", "person", "model"];
+        }
+
+
+        // 新增：依回傳的文字資訊判斷是否為「相反」性別（簡易啟發式）
+        function isOppositeGender(desiredGender, imageMeta) {
+            if (!desiredGender || desiredGender === 'unisex') return false;
+            const text = ((imageMeta && (imageMeta.name || imageMeta.credit)) || '').toLowerCase();
+            if (!text) return false;
+            const femaleWords = ['female', 'woman', 'women', 'lady', 'girl'];
+            const maleWords = ['male', 'man', 'men', 'boy', 'gentleman', 'guy'];
+            if (desiredGender === 'male') {
+                return femaleWords.some(w => text.includes(w));
+            }
+            if (desiredGender === 'female') {
+                return maleWords.some(w => text.includes(w));
+            }
+            return false;
+        }
+
+
+        // 修改 fetchPersonImage：使用多個 gender token 與模板，並檢查是否為相反性別（若是則跳過）
+        async function fetchPersonImage(gender, style, trend, occasion) {
+            const tokens = genderTokens(gender);
             const occasionToken = occasion ? ` ${occasion}` : '';
             const trendToken = trend ? ` ${trend}` : '';
             const styleToken = style ? ` ${style}` : '';
 
-            const personQueries = [
-                `${genderToken}${occasionToken}${trendToken}${styleToken} fashion model outfit`,
-                `${genderToken}${occasionToken}${styleToken} person wearing outfit`,
-                `${genderToken} fashion model${occasionToken}${trendToken}${styleToken}`,
-                `${genderToken}${occasionToken} outfit portrait`
+
+            const templates = [
+                (token) => `${token}${occasionToken}${trendToken}${styleToken} fashion model outfit`,
+                (token) => `${token}${occasionToken}${styleToken} person wearing outfit`,
+                (token) => `${token} fashion model${occasionToken}${trendToken}${styleToken}`,
+                (token) => `${token}${occasionToken} outfit portrait`,
+                (token) => `${token} full body portrait outfit`
             ];
 
-            for (const q of personQueries) {
-                const r = await fetchOneImage(q);
-                if (r && r.image) return r;
+
+            for (const tk of tokens) {
+                for (const tpl of templates) {
+                    const q = tpl(tk);
+                    const r = await fetchOneImage(q);
+                    if (r && r.image) {
+                        // 檢查是否可能為相反性別，若是則略過嘗試下一個結果
+                        if (isOppositeGender(gender, r)) {
+                            console.warn('Fetched image likely opposite gender, skipping:', q, r);
+                            continue;
+                        }
+                        return r;
+                    }
+                }
             }
-            return null;
+            console.warn('No person image found for tokens, using fallback person image');
+            return { image: FALLBACK_PERSON_IMAGE, name: '示意人物（預設）', credit: '', source: 'fallback' };
         }
 
-        // 優化 getOutfitsByStyle：移除 ethnicity，新增 trend/occasion 參數以便傳遞給 fetchPersonImage
+
+        // 修改 getOutfitsByStyle：以 genderTokens 組合 clothing 查詢，提升性別對應
         async function getOutfitsByStyle(style, gender, trend, occasion) {
             const styleToken = (style && style.trim()) ? style.trim().toLowerCase() : 'minimalist';
+            const tokens = genderTokens(gender);
 
-            const topsTerms = [
-                `${gender} upper body shirt ${styleToken}`,
-                `${gender} upper body top ${styleToken}`,
-                `${gender} upper body jacket ${styleToken}`
-            ];
-            const bottomsTerms = [
-                `${gender} lower body pants ${styleToken}`,
-                `${gender} lower body trousers ${styleToken}`,
-                `${gender} lower body jeans ${styleToken}`,
-                `${gender} lower body skirt ${styleToken}`
-            ];
-            const accessoriesTerms = [
-                `${gender} accessory necklace ${styleToken}`,
-                `${gender} accessory bracelet ${styleToken}`,
-                `${gender} accessory earrings ${styleToken}`
-            ];
+
+            const makeTerms = (categoryTerms) => {
+                const terms = [];
+                for (const tk of tokens) {
+                    for (const ct of categoryTerms) {
+                        terms.push(`${tk} ${ct} ${styleToken}`.trim());
+                    }
+                }
+                // 若還是沒命中，保留不帶 token 的備援查詢
+                for (const ct of categoryTerms) terms.push(`${ct} ${styleToken}`);
+                return terms;
+            };
+
+
+            const topsTerms = makeTerms(['upper body shirt', 'upper body top', 'upper body jacket']);
+            const bottomsTerms = makeTerms(['lower body pants', 'lower body trousers', 'lower body jeans', 'lower body skirt']);
+            const accessoriesTerms = makeTerms(['accessory necklace', 'accessory bracelet', 'accessory earrings']);
+
 
             async function fetchCategory(terms, fallbackKey) {
                 for (const t of terms) {
@@ -514,8 +591,9 @@
                 }
                 // fallback 使用 defaultOutfits
                 const d = defaultOutfits[fallbackKey] && defaultOutfits[fallbackKey][0] ? defaultOutfits[fallbackKey][0] : null;
-                return d ? [{ image: d.image, name: d.name, credit: d.credit || '' }] : [];
+                return d ? [{ image: d.image, name: d.name, credit: d.credit || '', source: 'fallback' }] : [];
             }
+
 
             const [tops, bottoms, accessories] = await Promise.all([
                 fetchCategory(topsTerms, 'casual'),
@@ -523,66 +601,70 @@
                 fetchCategory(accessoriesTerms, 'casual')
             ]);
 
+
             // 示意人物（維持原本邏輯）
             const person = await fetchPersonImage(gender, styleToken, trend, occasion);
 
+
             return { tops, bottoms, accessories, person };
         }
+
 
         // 修改 generateOutfit：不再讀取或使用 ethnicity
         async function generateOutfit(data) {
             const target = document.getElementById('outfitResult');
             target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>AI 正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
 
+
             try {
                 const trend = data.trend || '';
                 const occasion = data.occasion || '';
                 const style = data.style || '';
 
-                // 傳遞 trend/occasion 給 getOutfitsByStyle
+
                 const groups = await getOutfitsByStyle(style, data.gender, trend, occasion);
+
 
                 const uploadedSrc = document.getElementById('photoPreview') && document.getElementById('photoPreview').src && document.getElementById('photoPreview').style.display !== 'none'
                     ? document.getElementById('photoPreview').src
                     : null;
 
+
                 let personImg = groups.person && groups.person.image ? groups.person.image : null;
                 let personCredit = groups.person && groups.person.credit ? groups.person.credit : '';
+                let personSource = groups.person && groups.person.source ? groups.person.source : '';
+
 
                 const genderText = data.gender === 'male' ? '男性' : data.gender === 'female' ? '女性' : '中性';
                 const occasionText = occasion || '日常場合';
                 const styleText = style || '簡約風格';
                 const trendText = trend || '經典款式';
 
+
                 let aiDesc = '';
-                if (personImg) {
+                if (personSource && personSource !== 'fallback') {
                     aiDesc = `
                         <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
                             <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
                             根據您提供的身形數據（身高 ${data.height}cm、體重 ${data.weight}kg）以及個人風格偏好，AI 為您精選了這套${genderText}穿搭示意。<br><br>
-                            
-                            <strong>▸ 整體風格解析：</strong><br>
-                            這套搭配融合了「${trendText}」與「${styleText}」的設計語彙，特別針對「${occasionText}」場景量身打造。服裝剪裁線條俐落分明，版型比例經過精算，能完美修飾身形，同時保持舒適度與靈活性。<br><br>
-                            
-                            <strong>▸ 為什麼推薦這套？</strong><br>
-                            色彩搭配上採用協調漸層或撞色手法，既不過於張揚也不會太過低調，恰到好處地展現個人品味。配件與細節處理更是畫龍點睛，提升整體質感的同時也能凸顯您的時尚敏銳度。<br><br>
-                            
-                            <strong>▸ 實穿建議：</strong><br>
-                            這樣的穿搭不僅適合${occasionText}，稍作調整也能應用於其他場合。建議您可以參考示意圖的配色與層次感，挑選符合自己膚色與身形的單品，打造屬於自己的專屬風格。記住，最好的穿搭永遠是讓你自信又自在的那一套！
+                            （示意人物圖片來源：${personSource}）
                         </div>
                     `;
                 } else {
                     aiDesc = `
                         <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
                             <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
-                            很抱歉目前無法為您找到合適的示意人物圖片，不過別擔心！根據您的條件與偏好，AI 依然能給您專業的穿搭建議。<br><br>
-                            
-                            建議您選擇剪裁俐落、質感細膩的單品，搭配簡約但具設計感的配件。記得服裝最重要的是合身與舒適，再搭配適當的色彩組合，就能輕鬆展現專業時尚感。<br><br>
-                            
-                            您可以稍後再試試看，或是調整一下搜尋條件（例如風格、場合等），讓 AI 為您找到更貼近需求的穿搭靈感！
+                            目前使用系統示意人物圖片（因 API 或熱鏈阻擋未取得外部圖片）。<br><br>
                         </div>
                     `;
                 }
+
+
+                // 在 <img> 上加入 onerror：若載入失敗自動替換為 FALLBACK_PERSON_IMAGE 並在下方顯示提醒（簡易內聯處理）
+                const personImgTag = personImg
+                    ? `<img src="${personImg}" alt="person" onerror="this.onerror=null;this.src='${FALLBACK_PERSON_IMAGE}'; this.nextElementSibling && (this.nextElementSibling.textContent='示意人物圖片已替換為預設圖(可能因 hotlink/CORS 被阻擋)');">`
+                    : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">無示意人物圖</div>`;
+
 
                 const compositeHtml = `
                     ${aiDesc}
@@ -593,19 +675,23 @@
                         </div>
                         <div class="composite-preview">
                             <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">AI 示意人物</div>
-                            ${personImg ? `<img src="${personImg}" alt="person">` : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">無示意人物圖</div>`}
-                            <div style="font-size:14px;color:var(--muted);margin-top:14px;">${personCredit || ''}</div>
+                            ${personImgTag}
+                            <div style="font-size:14px;color:var(--muted);margin-top:14px;">${personCredit || ''} ${personSource ? `· 來源：${personSource}` : ''}</div>
+                            <div style="font-size:13px;color:#ffb070;margin-top:6px;"></div>
                         </div>
                     </div>
                 `;
 
+
                 target.innerHTML = compositeHtml;
+
 
             } catch (err) {
                 console.error(err);
                 target.innerHTML = '<p>無法載入示意圖，請稍後重試。</p>';
             }
         }
+
 
         // 使用 Nominatim (OpenStreetMap) 做地理編碼，然後呼叫 Open-Meteo 取得溫度與濕度
         async function fetchWeather(location) {
@@ -619,10 +705,12 @@
             const lon = geoJson[0].lon;
             const displayName = geoJson[0].display_name || location;
 
+
             const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=relativehumidity_2m&current_weather=true&timezone=auto`;
             const wRes = await fetch(weatherUrl);
             const wJson = await wRes.json();
             const temp = wJson.current_weather && wJson.current_weather.temperature !== undefined ? wJson.current_weather.temperature : null;
+
 
             // 從 hourly 找出最接近現在時間的濕度值（若存在）
             let humidity = null;
@@ -637,6 +725,7 @@
                 humidity = wJson.hourly.relativehumidity_2m[idx];
             }
 
+
             return {
                 temperature: temp !== null ? Number(temp).toFixed(1) : '—',
                 humidity: humidity !== null ? Math.round(humidity) : null,
@@ -644,22 +733,27 @@
             };
         }
 
+
         // 照片上傳處理
         const photoUploadArea = document.getElementById('photoUploadArea');
         const photoInput = document.getElementById('photoInput');
         const photoPreview = document.getElementById('photoPreview');
 
+
         photoUploadArea.addEventListener('click', () => photoInput.click());
+
 
         photoUploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             photoUploadArea.style.background = 'rgba(255, 236, 224, 0.1)';
         });
 
+
         photoUploadArea.addEventListener('dragleave', (e) => {
             e.preventDefault();
             photoUploadArea.style.background = 'rgba(255, 236, 224, 0.05)';
         });
+
 
         photoUploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
@@ -669,12 +763,14 @@
             }
         });
 
+
         photoInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
                 handlePhotoUpload(file);
             }
         });
+
 
         function handlePhotoUpload(file) {
             const reader = new FileReader();
@@ -689,3 +785,4 @@
     </script>
 </body>
 </html>
+
