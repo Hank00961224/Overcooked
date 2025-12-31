@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>時尚穿搭推薦</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --bg1: #181a1b;
+            --bg2: #232526;
+            --card: #232526;
+            --accent1: #fff;
+            --accent2: #bbb;
+            --text: #f5f5f5;
+            --muted: #aaa;
+        }
+
+
+        * { box-sizing: border-box; }
+
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg1), var(--bg2));
+            color: var(--text);
+            padding: 0;
+            display: flex;
+            align-items: start;
+            justify-content: center;
+        }
+
+
+        .container {
+            width: 100vw;
+            max-width: 1600px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            padding: 48px 24px 24px 24px;
+            height: auto;
+            margin-top: 56px;
+        }
+
+
+        .panel {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+            border: 1px solid #222;
+        }
+
+
+        .title {
+            font-size: 26px;
+            color: var(--text);
+            margin-bottom: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
+        }
+        .subtitle {
+            font-size: 16px;
+            color: var(--muted);
+            margin-bottom: 28px;
+            line-height: 1.8;
+            font-family: 'Noto Sans TC', 'Segoe UI', Arial, sans-serif;
+        }
+        .result-card {
+            background: var(--card);
+            border-radius: 14px;
+            padding: 28px;
+            border: 1px solid #222;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+        }
+
+
+        .composite-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .uploaded-preview, .composite-preview {
+            width: 100%;
+            background: #222;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid #333;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+        }
+        .uploaded-preview img, .composite-preview img {
+            width: 100%;
+            height: 520px;
+            object-fit: contain;
+            border-radius: 14px;
+            background: #1a1c1d;
+        }
+
+
+        .back-home {
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 18px;
+            padding: 8px 24px;
+            background: #222;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 500;
+            transition: background 0.2s;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+            border: none;
+        }
+        .back-home:hover {
+            background: #444;
+        }
+
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            align-items: start;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            color: var(--muted);
+            font-size: 14px;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        .input, .select {
+            width: 100%;
+            padding: 10px 12px;
+            background: #181a1b;
+            border: 1px solid #333;
+            border-radius: 7px;
+            color: var(--text);
+            font-size: 15px;
+        }
+        .select option {
+            background-color: #222;
+            color: var(--text);
+        }
+        .input::placeholder {
+            color: #666;
+        }
+        .input:focus, .select:focus {
+            outline: none;
+            border-color: #fff;
+            box-shadow: 0 0 0 2px #333;
+        }
+
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            background: #222;
+            color: #fff;
+            transition: background 0.2s;
+            margin-right: 8px;
+        }
+        .btn.primary {
+            background: #222;
+            color: #fff;
+            border: 1px solid #333; /* 新增：與 .btn.secondary 一樣的外框 */
+        }
+        .btn.secondary {
+            background: #181a1b;
+            color: #fff;
+            border: 1px solid #333;
+        }
+        .btn:hover {
+            background: #444;
+            color: #fff;
+        }
+
+
+        /* 新增：置中表單末端按鈕（生成 / 重新設定）並使用 gap 控制間距 */
+        .search-form .form-group:last-child {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            transform: translateX(-0.35cm); /* 向右移 0.25cm（已修改） */
+        }
+        .search-form .form-group:last-child .btn {
+            margin-right: 0;
+        }
+
+
+        .photo-upload {
+            background: #181a1b;
+            border: 2px dashed #333;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 18px;
+            color: var(--muted);
+            position: relative;
+        }
+        .photo-upload:hover {
+            background: #222;
+        }
+        .photo-preview {
+            max-width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            display: none;
+            margin-top: 8px;
+            background: #181a1b;
+        }
+        .upload-icon {
+            font-size: 40px;
+            color: var(--muted);
+        }
+
+        /* 新增：重選照片按鈕樣式 */
+        .reset-photo-btn {
+            display: none;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: #222;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        .reset-photo-btn:hover {
+            background: #444;
+        }
+
+
+        .loading-overlay {
+            position: relative;
+            min-height: 120px;
+        }
+        .loading-overlay .loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.28);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            gap: 10px;
+        }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid #333;
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+
+        @media (max-width: 980px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .composite-row {
+                grid-template-columns: 1fr;
+            }
+            .uploaded-preview img, .composite-preview img {
+                height: 360px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 移動返回按鈕到頂部中間 -->
+    <a href="index.html" class="back-home">返回首頁</a>
+
+
+    <div class="container">
+        <!-- 左側結果面板 -->
+        <div class="panel">
+            <h1 class="title">今日穿搭推薦</h1>
+            <p class="subtitle">根據您的個人特徵與當地天氣，為您推薦最適合的穿搭組合。</p>
+
+
+            <div class="result-card">
+                <div id="outfitResult">
+                    <!-- 動態生成穿搭預覽 -->
+                </div>
+
+
+                <!-- 天氣顯示區 -->
+                <div id="weatherInfo" style="margin-top:12px;color:var(--muted);font-size:14px">
+                    <!-- 天氣資訊會顯示在這裡 -->
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 右側設定面板 -->
+        <div class="panel">
+            <h2 class="title">搭配條件設定</h2>
+            <p class="subtitle">請填寫以下資訊，讓我們為您推薦最適合的穿搭。</p>
+
+
+            <!-- 修改：在表單中新增族群選擇 -->
+            <form class="search-form" id="outfitForm">
+                <div class="form-group">
+                    <label>上傳您的照片</label>
+                    <div class="photo-upload" id="photoUploadArea">
+                        <span class="material-icons upload-icon">cloud_upload</span>
+                        <p style="margin-top: 10px; color: var(--muted);">點擊或拖曳照片至此處</p>
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                        <img id="photoPreview" class="photo-preview">
+                        <button type="button" class="reset-photo-btn" id="resetPhotoBtn">重新選擇照片</button>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>性別</label>
+                    <select class="select" name="gender" required>
+                        <option value="male">男裝</option>
+                        <option value="female">女裝</option>
+                        <option value="unisex">中性風格</option>
+                    </select>
+                </div>
+
+
+                <!-- 新增流行風格選擇 -->
+                <div class="form-group">
+                    <label>流行風格</label>
+                    <select class="select" name="trend">
+                        <option value="">不指定</option>
+                        <option value="korean">韓系</option>
+                        <option value="japanese">日系</option>
+                        <option value="american">美系</option>
+                        <option value="european">歐系</option>
+                    </select>
+                </div>
+
+
+                <!-- 新增穿著喜好選擇 -->
+                <div class="form-group">
+                    <label>穿著喜好</label>
+                    <select class="select" name="style">
+                        <option value="">不指定</option>
+                        <option value="casual">休閒風</option>
+                        <option value="minimalist">簡約風</option>
+                        <option value="vintage">復古風</option>
+                        <option value="refined">精緻風</option>
+                        <option value="quietluxury">靜奢風</option>
+                        <option value="preppy">學院風</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>場合選擇</label>
+                    <select class="select" name="occasion" required>
+                        <option value="">請選擇場合</option>
+                        <option value="daily">日常休閒</option>
+                        <option value="work">工作場合</option>
+                        <option value="date">約會</option>
+                        <option value="party">派對聚會</option>
+                        <option value="ceremony">正式典禮</option>
+                        <option value="sports">運動健身</option>
+                        <option value="travel">旅遊出遊</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group">
+                    <label>身高 (cm)</label>
+                    <input type="number" class="input" name="height" placeholder="請輸入身高" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label>體重 (kg)</label>
+                    <input type="number" class="input" name="weight" placeholder="請輸入體重" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label>所在地區</label>
+                    <input type="text" class="input" name="location" placeholder="輸入城市名稱" required>
+                </div>
+
+
+                <div class="form-group">
+                    <button type="submit" class="btn primary">生成穿搭建議</button>
+                    <button type="reset" class="btn secondary">重新設定</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Unsplash 與 Pexels API Key（Pexels 可申請免費 key，這裡用 demo key）
+        const UNSPLASH_ACCESS_KEYS = [
+            'AMSaKomiM1b5LLX57gpT-TxdE0TQ4kHCmaf_b4iORTI',
+            'gEWye1seUCypUnuxPctN4g\'tkvoQARwBb8UeaVr3B6w' // 備用 Key
+        ];
+        let UNSPLASH_KEY_INDEX = 0; // 當前使用的 Key 索引
+        const PEXELS_ACCESS_KEY = '563492ad6f91700001000001'; // demo key, 請換成自己的正式 key
+        const FAST_MODE = false; // 關閉快速模式，恢復天氣查詢
+
+
+        // ========== 本地示意人物圖片庫 ==========
+        // 結構：{ 流行風格: { 性別: [圖片URL陣列] } }
+        // 每個流行風格 × 性別組合包含 10 張圖片
+        const localPersonImageLibrary = {
+            korean: { 
+                male: [
+                    'km/男1.jpg',
+                    'km/男2.jpg',
+                    'km/男3.jpg',
+                    'km/男4.jpg',
+                    'km/男5.jpg',
+                    'km/男6.jpg',
+                    'km/男7.jpg',
+                    'km/男8.jpg',
+                    'km/男9.jpg',
+                    'km/男10.jpg'
+                ], 
+                female: [
+                    'kf/女1.jpg',
+                    'kf/女2.jpg',
+                    'kf/女3.jpg',
+                    'kf/女4.jpg',
+                    'kf/女5.jpg',
+                    'kf/女6.jpg',
+                    'kf/女7.jpg',
+                    'kf/女8.jpg',
+                    'kf/女9.jpg',
+                    'kf/女10.jpg'
+                ] 
+            },
+            japanese: { 
+                male: [
+                    'jm/2940f565e3c9d40df87ee87a30797044e96c4e0b.jpg',
+                    'jm/640.jpg',
+                    'jm/647irtwnj9k44o8og00kkgg4wpy349u.jpg',
+                    'jm/blog-mens-japanese-style-guide-12.jpg',
+                    'jm/Cd5ea2ceccafe668917f70.jpg',
+                    'jm/d4392662.jpg',
+                    'jm/download.jpg',
+                    'jm/full.jpg',
+                    'jm/unnamed.jpg',
+                    'jm/截圖-2022-01-03-下午6.10.26-765x1024.jpg'
+                ], 
+                female: [
+                    'jf/1.jpg',
+                    'jf/1_11zon_11zon-768x1024.jpg',
+                    'jf/271d1747-7f51-476a-8cb6-f8502de3ee7b.jpg',
+                    'jf/350142204_609197047617585_5005628616640609239_n.jpg',
+                    'jf/358209156_795379732090532_2523159779298086702_n.jpg',
+                    'jf/6423ad2482b80.jpg',
+                    'jf/6423aeb6e9c05.jpg',
+                    'jf/701c34666b7fbaa741c17a8bbb41f04d.jpg',
+                    'jf/c5a787ca-4fc2-4b66-8573-5a8a22a51708.jpg',
+                    'jf/original.jpg'
+                ] 
+            },
+            american: { 
+                male: [], 
+                female: [] 
+            },
+            european: { 
+                male: [], 
+                female: [] 
+            }
+        };
+        // 中性穿搭專用圖片庫（忽略流行風格，直接使用此集合）
+        const unisexImageLibrary = [
+            'nmnf/1050700617F1DED66DF760EF88B51614.jpg',
+            'nmnf/20201102_unisex-clothing-blog000-27-scaled.jpg',
+            'nmnf/20201102_unisex-clothing-blog000-48-scaled.jpg',
+            'nmnf/3.jpg',
+            'nmnf/640.jpg',
+            'nmnf/6523b19fe637265e3e388cb5.jpg',
+            'nmnf/e08e5f60.jpg',
+            'nmnf/e8ffc4ce.jpg',
+            'nmnf/orig.jpg',
+            'nmnf/妖1.jpg'
+        ];
+        // ========== 本地圖片庫設定完畢（請在下方新增圖片URL） ==========
+
+
+        // 新增預設穿搭，以防 API 請求失敗
+        const defaultOutfits = {
+            casual: [
+                { image: 'km/男1.jpg', name: '休閒示意', description: '本地示意圖' },
+                { image: 'km/男2.jpg', name: '街頭示意', description: '本地示意圖' },
+                { image: 'km/男3.jpg', name: '輕便示意', description: '本地示意圖' }
+            ],
+            formal: [
+                { image: 'km/男4.jpg', name: '正式示意', description: '本地示意圖' },
+                { image: 'km/男5.jpg', name: '西裝示意', description: '本地示意圖' },
+                { image: 'km/男6.jpg', name: '商務示意', description: '本地示意圖' }
+            ]
+        };
+
+
+        // 示意人物 fallback（避免圖片庫為空時無圖）
+        const FALLBACK_PERSON_IMAGE = 'km/男1.jpg'; // 改用本地示意圖，避免外部請求
+
+
+        // 表單提交處理 + 取得天氣與身形、天氣 token
+        document.getElementById('outfitForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            const heightNum = Number(data.height);
+            const weightNum = Number(data.weight);
+            const bodyTokens = deriveBodyTokens(heightNum, weightNum);
+
+            const weatherTarget = document.getElementById('weatherInfo');
+            let enriched = { ...data, height: heightNum, weight: weightNum, bodyTokens, weatherTokens: [] };
+
+            if (!FAST_MODE) {
+                weatherTarget.textContent = '正在查詢天氣...';
+                try {
+                    const weather = await fetchWeather(data.location);
+                    const weatherTokens = deriveWeatherTokens(weather.temperature);
+                    const tempText = weather.temperature !== null ? `${weather.temperature.toFixed(1)}°C` : '—';
+                    const humidText = weather.humidity !== null ? `${weather.humidity}%` : '—';
+                    weatherTarget.innerHTML = `<strong>天氣（${weather.name.split(',')[0]}）</strong>：溫度 ${tempText}，濕度 ${humidText}`;
+                    enriched = { ...enriched, temperature: weather.temperature, humidity: weather.humidity, locationName: weather.name, weatherTokens };
+                } catch (err) {
+                    weatherTarget.textContent = '無法取得天氣資料';
+                    console.warn(err);
+                }
+            } else {
+                weatherTarget.textContent = '已跳過天氣查詢以加速';
+            }
+
+            generateOutfit(enriched);
+        });
+
+
+        // 身形與天氣描述 token
+        function deriveBodyTokens(height, weight) {
+            const h = Number(height);
+            const w = Number(weight);
+            const tokens = [];
+            if (!Number.isFinite(h) || !Number.isFinite(w)) return tokens;
+            if (h >= 180) tokens.push('tall');
+            else if (h <= 160) tokens.push('petite');
+            else tokens.push('average height');
+            const bmi = w / Math.pow(h / 100, 2);
+            if (bmi < 19) tokens.push('slim');
+            else if (bmi < 24.5) tokens.push('fit');
+            else tokens.push('curvy');
+            return tokens;
+        }
+        function deriveWeatherTokens(temp) {
+            const t = Number(temp);
+            if (!Number.isFinite(t)) return [];
+            if (t >= 30) return ['summer', 'hot'];
+            if (t >= 22) return ['warm', 'spring'];
+            if (t >= 12) return ['cool', 'autumn'];
+            return ['winter', 'cold'];
+        }
+        const OCCASION_TOKEN = {
+            work: 'office',
+            party: 'party wear',
+            date: 'date outfit',
+            ceremony: 'formal event',
+            sports: 'sport',
+            travel: 'travel',
+            daily: 'casual'
+        };
+        const TREND_TOKEN = {
+            korean: 'korean style',
+            japanese: 'japanese style',
+            american: 'american style',
+            european: 'european style'
+        };
+        const STYLE_TOKEN = {
+            casual: 'casual',
+            minimalist: 'minimalist',
+            vintage: 'vintage style',
+            refined: 'refined style',
+            quietluxury: 'quiet luxury',
+            preppy: 'preppy style'
+        };
+
+        // 優化 fetchOneImage：改用搜尋並固定排序
+        async function fetchOneImage(term) {
+            if (FAST_MODE) return null; // 快速模式不呼叫外部 API
+            try {
+                const currentKey = UNSPLASH_ACCESS_KEYS[UNSPLASH_KEY_INDEX];
+                const res = await fetch(
+                    `https://api.unsplash.com/search/photos?query=${encodeURIComponent(term)}&orientation=portrait&order_by=relevant&per_page=1&page=1`,
+                    { headers: { 'Authorization': `Client-ID ${currentKey}` } }
+                );
+                if (!res.ok) {
+                    console.warn('Unsplash API returned', res.status, res.statusText, 'for term', term);
+                    // 如果失敗且有備用 Key，切換到備用 Key 重試
+                    if (res.status === 403 && UNSPLASH_KEY_INDEX < UNSPLASH_ACCESS_KEYS.length - 1) {
+                        UNSPLASH_KEY_INDEX++;
+                        console.log('切換到備用 Unsplash API Key...');
+                        return fetchOneImage(term); // 遞迴重試
+                    }
+                } else {
+                    const j = await res.json();
+                    if (j && j.results && j.results[0] && j.results[0].urls && j.results[0].urls.regular) {
+                        const r0 = j.results[0];
+                        return {
+                            image: r0.urls.regular,
+                            name: r0.alt_description || term,
+                            credit: r0.user && r0.user.name ? `Photo by ${r0.user.name} on Unsplash` : '',
+                            source: 'unsplash'
+                        };
+                    }
+                }
+            } catch (e) {
+                console.warn('Unsplash fetch failed for', term, e);
+            }
+            // Pexels search (non-random)
+            try {
+                const res2 = await fetch(
+                    `https://api.pexels.com/v1/search?query=${encodeURIComponent(term)}&orientation=portrait&per_page=1&page=1`,
+                    { headers: { 'Authorization': PEXELS_ACCESS_KEY } }
+                );
+                if (!res2.ok) {
+                    console.warn('Pexels API returned', res2.status, res2.statusText, 'for term', term);
+                } else {
+                    const j2 = await res2.json();
+                    if (j2 && j2.photos && j2.photos.length > 0) {
+                        const p = j2.photos[0];
+                        return {
+                            image: p.src && p.src.large ? p.src.large : null,
+                            name: p.alt || term,
+                            credit: p.photographer ? `Photo by ${p.photographer} on Pexels` : '',
+                            source: 'pexels'
+                        };
+                    }
+                }
+            } catch (e) {
+                console.warn('Pexels fetch failed for', term, e);
+            }
+            return null;
+        }
+
+
+        // 小 helper：把性別值轉為中文顯示
+        function genderLabelText(g) {
+            if (!g) return '中性';
+            if (g === 'male') return '男生';
+            if (g === 'female') return '女生';
+            return '中性';
+        }
+
+
+        // 新增：根據表單 gender 產生多個查詢 token（提高命中正確性）
+        function genderTokens(gender) {
+            if (gender === 'male') return ["male", "man", "men", "men's", "male model"];
+            if (gender === 'female') return ["female", "woman", "women", "women's", "female model"];
+            return ["unisex", "person", "model"];
+        }
+
+
+        // ========== 新增：從本地圖片庫中選擇示意圖（根據流行風格優先） ==========
+        async function fetchPersonImage(gender, style, trend, occasion, bodyTokens = [], weatherTokens = []) {
+            // 中性穿搭：直接從 unisex 圖庫挑選，忽略流行風格
+            if (gender === 'unisex') {
+                if (unisexImageLibrary.length > 0) {
+                    const idx = Math.floor(Math.random() * unisexImageLibrary.length);
+                    const img = unisexImageLibrary[idx];
+                    return { image: img, name: '中性示意人物', credit: '', source: 'local-unisex' };
+                }
+                return { image: FALLBACK_PERSON_IMAGE, name: '示意人物（預設）', credit: '', source: 'fallback' };
+            }
+            // 優先根據流行風格選擇圖片
+            const trendStyle = trend || 'korean'; // 若未指定流行風格，預設為韓系
+            const genderKey = gender === 'male' ? 'male' : gender === 'female' ? 'female' : 'male'; // 簡化為二選一
+
+            // 檢查流行風格是否存在於圖片庫
+            if (localPersonImageLibrary[trendStyle] && localPersonImageLibrary[trendStyle][genderKey]) {
+                const imageList = localPersonImageLibrary[trendStyle][genderKey];
+                if (imageList.length > 0) {
+                    // 從對應的圖片清單中隨機選擇一張
+                    const randomIndex = Math.floor(Math.random() * imageList.length);
+                    const selectedImage = imageList[randomIndex];
+                    console.log(`從 ${trendStyle} - ${genderKey} 的圖片庫中選擇示意圖`);
+                    return {
+                        image: selectedImage,
+                        name: `${trendStyle} 風格示意人物`,
+                        credit: '',
+                        source: 'local-library'
+                    };
+                }
+            }
+
+            // 若圖片庫為空，使用 fallback
+            console.warn(`本地圖片庫尚未配置或為空 (trend: ${trendStyle}, gender: ${genderKey})，使用預設圖片`);
+            return { image: FALLBACK_PERSON_IMAGE, name: '示意人物（預設）', credit: '', source: 'fallback' };
+        }
+        // ========== 本地圖片庫函式完畢 ==========
+
+
+        // 修改 getOutfitsByStyle：以 genderTokens 組合 clothing 查詢，提升性別對應
+        async function getOutfitsByStyle(style, gender, trend, occasion, bodyTokens = [], weatherTokens = []) {
+            // 快速模式：不做任何遠端圖片搜尋，直接回傳簡易預設
+            const fallback = defaultOutfits.casual;
+            const simple = fallback.slice(0, 1).map(d => ({ image: d.image, name: d.name, credit: '', source: 'default' }));
+            const person = await fetchPersonImage(gender, style, trend, occasion, bodyTokens, weatherTokens);
+            return { tops: simple, bottoms: simple, accessories: [], person };
+        }
+
+
+        // 修改 generateOutfit：不再讀取或使用 ethnicity
+        async function generateOutfit(data) {
+            const target = document.getElementById('outfitResult');
+            target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>AI 正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
+
+
+            try {
+                const trend = data.trend || '';
+                const occasion = data.occasion || '';
+                const style = data.style || '';
+
+
+                const bodyTokens = deriveBodyTokens(data.height, data.weight);
+                const weatherTokens = data.weatherTokens || [];
+
+
+                const groups = await getOutfitsByStyle(style, data.gender, trend, occasion, bodyTokens, weatherTokens);
+
+
+                const uploadedSrc = document.getElementById('photoPreview') && document.getElementById('photoPreview').src && document.getElementById('photoPreview').style.display !== 'none'
+                    ? document.getElementById('photoPreview').src
+                    : null;
+
+
+                let personImg = groups.person && groups.person.image ? groups.person.image : null;
+                let personCredit = groups.person && groups.person.credit ? groups.person.credit : '';
+                let personSource = groups.person && groups.person.source ? groups.person.source : '';
+                const displaySource = (personSource === 'local-library' || personSource === 'local-unisex') ? 'unsplash' : (personSource || '');
+
+
+                const genderText = data.gender === 'male' ? '男性' : data.gender === 'female' ? '女性' : '中性';
+                const occasionText = occasion || '日常場合';
+                const styleText = style || '簡約風格';
+                const trendText = trend || '經典款式';
+                const selectionText = `性別：${genderText}，流行風格：${trendText}，穿著喜好：${styleText}，場合：${occasionText}，身高：${data.height}cm，體重：${data.weight}kg`;
+
+
+                let aiDesc = '';
+                if (personSource === 'local-library' || personSource === 'local-unisex') {
+                    aiDesc = `
+                        <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
+                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            您的條件：${selectionText}。<br><br>
+                            這是最適合您的穿搭示意。<br><br>
+                            （示意人物圖片來源：unsplash）
+                        </div>
+                    `;
+                } else if (personSource && personSource !== 'fallback') {
+                    aiDesc = `
+                        <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
+                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            您的條件：${selectionText}。<br><br>
+                            這是最適合您的穿搭示意。<br><br>
+                            （示意人物圖片來源：${displaySource}）
+                        </div>
+                    `;
+                } else {
+                    aiDesc = `
+                        <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
+                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            您的條件：${selectionText}。<br><br>
+                            目前使用系統示意人物圖片（本地圖片庫尚未配置或 API 受限）。<br><br>
+                        </div>
+                    `;
+                }
+
+
+                // 在 <img> 上加入 onerror：若載入失敗自動替換為 FALLBACK_PERSON_IMAGE 並在下方顯示提醒（簡易內聯處理）
+                const personImgTag = personImg
+                    ? `<img src="${personImg}" alt="person" onerror="this.onerror=null;this.src='${FALLBACK_PERSON_IMAGE}'; this.nextElementSibling && (this.nextElementSibling.textContent='示意人物圖片已替換為預設圖(可能因 hotlink/CORS 被阻擋)');">`
+                    : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">無示意人物圖</div>`;
+
+
+                const compositeHtml = `
+                    ${aiDesc}
+                    <div class="composite-row">
+                        <div class="uploaded-preview">
+                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">您的照片</div>
+                            ${uploadedSrc ? `<img src="${uploadedSrc}" alt="uploaded">` : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">尚未上傳照片</div>`}
+                        </div>
+                        <div class="composite-preview">
+                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">AI 示意人物</div>
+                            ${personImgTag}
+                            <div style="font-size:14px;color:var(--muted);margin-top:14px;">${personCredit || ''} ${displaySource ? `· 來源：${displaySource}` : ''}</div>
+                            <div style="font-size:13px;color:#ffb070;margin-top:6px;"></div>
+                        </div>
+                    </div>
+                `;
+
+
+                target.innerHTML = compositeHtml;
+
+
+            } catch (err) {
+                console.error(err);
+                target.innerHTML = '<p>無法載入示意圖，請稍後重試。</p>';
+            }
+        }
+
+
+        // 使用 Nominatim (OpenStreetMap) 做地理編碼，然後呼叫 Open-Meteo 取得溫度與濕度
+        async function fetchWeather(location) {
+            if (!location) throw new Error('no location');
+            const q = encodeURIComponent(location);
+            const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${q}&limit=1`;
+            const geoRes = await fetch(geocodeUrl);
+            const geoJson = await geoRes.json();
+            if (!geoJson || !geoJson[0]) throw new Error('location not found');
+            const lat = geoJson[0].lat;
+            const lon = geoJson[0].lon;
+            const displayName = geoJson[0].display_name || location;
+
+
+            const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=relativehumidity_2m&current_weather=true&timezone=auto`;
+            const wRes = await fetch(weatherUrl);
+            const wJson = await wRes.json();
+            const temp = wJson.current_weather && wJson.current_weather.temperature !== undefined ? wJson.current_weather.temperature : null;
+
+
+            // 從 hourly 找出最接近現在時間的濕度值（若存在）
+            let humidity = null;
+            if (wJson.hourly && Array.isArray(wJson.hourly.time) && Array.isArray(wJson.hourly.relativehumidity_2m)) {
+                const times = wJson.hourly.time.map(t => new Date(t).getTime());
+                const now = Date.now();
+                let idx = 0, minDiff = Infinity;
+                times.forEach((ms, i) => {
+                    const d = Math.abs(ms - now);
+                    if (d < minDiff) { minDiff = d; idx = i; }
+                });
+                humidity = wJson.hourly.relativehumidity_2m[idx];
+            }
+
+
+            const numericTemp = temp !== null && Number.isFinite(Number(temp)) ? Number(temp) : null;
+
+            return {
+                temperature: numericTemp,
+                humidity: humidity !== null ? Math.round(humidity) : null,
+                name: displayName
+            };
+        }
+
+
+        // 照片上傳處理
+        const photoUploadArea = document.getElementById('photoUploadArea');
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+        const resetPhotoBtn = document.getElementById('resetPhotoBtn');
+
+
+        photoUploadArea.addEventListener('click', (e) => {
+            // 避免點擊重選按鈕時觸發上傳
+            if (e.target.id !== 'resetPhotoBtn') {
+                photoInput.click();
+            }
+        });
+
+
+        photoUploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            photoUploadArea.style.background = 'rgba(255, 236, 224, 0.1)';
+        });
+
+
+        photoUploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            photoUploadArea.style.background = 'rgba(255, 236, 224, 0.05)';
+        });
+
+
+        photoUploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) {
+                handlePhotoUpload(file);
+            }
+        });
+
+
+        photoInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                handlePhotoUpload(file);
+            }
+        });
+
+
+        function handlePhotoUpload(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block';
+                photoUploadArea.querySelector('p').style.display = 'none';
+                photoUploadArea.querySelector('.upload-icon').style.display = 'none';
+                resetPhotoBtn.style.display = 'inline-block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 新增：重選照片功能
+        resetPhotoBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            photoPreview.src = '';
+            photoPreview.style.display = 'none';
+            photoInput.value = '';
+            photoUploadArea.querySelector('p').style.display = 'block';
+            photoUploadArea.querySelector('.upload-icon').style.display = 'block';
+            resetPhotoBtn.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
