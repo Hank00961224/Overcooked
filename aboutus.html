@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>關於我們</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- 新增：移除 aboutus 列表的前導點並橫向排列成四組，圖片設定為200×200 -->
+    <style>
+        .aboutus ul {
+            list-style: none;
+            padding-left: 0;
+            margin-left: 0;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+        .aboutus .member {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 200px; /* 固定寬度讓每組一致 */
+        }
+        .aboutus .member .team-photo img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
 </head>
 <body>
         <header>
@@ -14,7 +38,7 @@
         <li><a href="index.html">首頁</a></li>
         <li><a href="guide.html">使用指南</a></li>
         <li><a href="introduction.html">專題介紹</a></li>
-        <li><a href="resources.html">資料來源</a></li>
+        <li><a href="resources.html">3D研發</a></li>
         <li><a href="tryon_suggest.html">立即使用</a></li>
     </ul>
     </nav>
@@ -24,10 +48,22 @@
     <h2>團隊成員</h2>
     <p>我們是一個由四位大安高工電機科的學生組成的團隊</p>
     <ul>
-        <li>組長:謝嘉安</li>
-        <li>組員:何承翰</li>
-        <li>組員:張立澄</li>
-        <li>組員:廖宥銨</li>
+        <li class="member">
+            <div>組長:謝嘉安</div>
+            <div class="team-photo"><img src="images/234.jpg" alt="組照 234"></div>
+        </li>
+        <li class="member">
+            <div>組員:何承翰</div>
+            <div class="team-photo"><img src="images/456.jpg" alt="組照 456"></div>
+        </li>
+        <li class="member">
+            <div>組員:張立澄</div>
+            <div class="team-photo"><img src="images/789.jpg" alt="組照 789"></div>
+        </li>
+        <li class="member">
+            <div>組員:廖宥銨</div>
+            <div class="team-photo"><img src="images/123.jpg" alt="組照 123"></div>
+        </li>
     </ul>
     </section>
     <section class="why">
