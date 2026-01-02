@@ -485,12 +485,56 @@
                 ] 
             },
             american: { 
-                male: [], 
-                female: [] 
+                male: [
+                    'am/1.jpg',
+                    'am/111aed84e60242ac110004.jpg',
+                    'am/123.jpg',
+                    'am/61a441d3bd7aa.jpg',
+                    'am/94213008044f915f3fc135a452294d8c833e79425d26b54b5e07a54eb3fe.jpg',
+                    'am/download.jpg',
+                    'am/images.jpg',
+                    'am/medium_62b47957f1b4d8cc.jpg',
+                    'am/ugc_stylehint_uq_fr_photo_231030_1203742_r-1000-1333.jpg',
+                    'am/unnamed.jpg'
+                ], 
+                female: [
+                    'af/10-OL.jpg',
+                    'af/141.jpg',
+                    'af/2.jpg',
+                    'af/2020-07-23-1595500162.jpg',
+                    'af/4.jpg',
+                    'af/672C66B99748E1730963129.jpg',
+                    'af/7.jpg',
+                    'af/7ff135c3-201e-492f-bf0e-5cdd3acf6a6d.jpg',
+                    'af/87.jpg',
+                    'af/9C4A8456-edited-768x1024.jpg'
+                ] 
             },
             european: { 
-                male: [], 
-                female: [] 
+                male: [
+                    'em/0.jpg',
+                    'em/11241545202.jpg',
+                    'em/176518873411597_P32858879.jpg',
+                    'em/2232342.jpg',
+                    'em/2a63a66771b7c783d507ded93fae2f77.jpg',
+                    'em/338994.jpg',
+                    'em/4145215541.jpg',
+                    'em/441641454515.jpg',
+                    'em/46345145.jpg',
+                    'em/87451515.jpg'
+                ], 
+                female: [
+                    'ef/11062b_2523909cb50246f69c6adf1d46320683~mv2.jpg',
+                    'ef/1231161561651.jpg',
+                    'ef/2665632325652.jpg',
+                    'ef/6259656.jpg',
+                    'ef/640.jpg',
+                    'ef/777542.jpg',
+                    'ef/999787455.jpg',
+                    'ef/a3fca53d-d860-4ea1-8288-bdf99fcd1848.jpg',
+                    'ef/IMG_2845-1440x1081.jpg',
+                    'ef/WS42T-2x3-Startpage-splash-image-w52.jpg'
+                ] 
             }
         };
         // 中性穿搭專用圖片庫（忽略流行風格，直接使用此集合）
@@ -737,7 +781,7 @@
         // 修改 generateOutfit：不再讀取或使用 ethnicity
         async function generateOutfit(data) {
             const target = document.getElementById('outfitResult');
-            target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>AI 正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
+            target.innerHTML = `<div class="loading-overlay"><div class="loader"><div class="spinner"></div><div>系統正在分析您的個人條件並生成專業穿搭建議…</div></div></div>`;
 
 
             try {
@@ -775,7 +819,7 @@
                 if (personSource === 'local-library' || personSource === 'local-unisex') {
                     aiDesc = `
                         <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
-                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            <strong style="font-size:20px;">🎯 穿搭分析</strong><br><br>
                             您的條件：${selectionText}。<br><br>
                             這是最適合您的穿搭示意。<br><br>
                             （示意人物圖片來源：unsplash）
@@ -784,7 +828,7 @@
                 } else if (personSource && personSource !== 'fallback') {
                     aiDesc = `
                         <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
-                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            <strong style="font-size:20px;">🎯 穿搭分析</strong><br><br>
                             您的條件：${selectionText}。<br><br>
                             這是最適合您的穿搭示意。<br><br>
                             （示意人物圖片來源：${displaySource}）
@@ -793,7 +837,7 @@
                 } else {
                     aiDesc = `
                         <div style="font-size:18px;color:var(--text);line-height:2.2;font-family:'Noto Sans TC','Segoe UI',Arial,sans-serif;margin-bottom:24px;">
-                            <strong style="font-size:20px;">🎯 AI 專業穿搭分析</strong><br><br>
+                            <strong style="font-size:20px;">🎯 穿搭分析</strong><br><br>
                             您的條件：${selectionText}。<br><br>
                             目前使用系統示意人物圖片（本地圖片庫尚未配置或 API 受限）。<br><br>
                         </div>
@@ -815,7 +859,7 @@
                             ${uploadedSrc ? `<img src="${uploadedSrc}" alt="uploaded">` : `<div style="width:100%;height:520px;display:flex;align-items:center;justify-content:center;color:var(--muted);background:#181a1b;border-radius:14px;">尚未上傳照片</div>`}
                         </div>
                         <div class="composite-preview">
-                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">AI 示意人物</div>
+                            <div style="color:var(--muted);font-size:16px;margin-bottom:12px;font-weight:500;">示意人物</div>
                             ${personImgTag}
                             <div style="font-size:14px;color:var(--muted);margin-top:14px;">${personCredit || ''} ${displaySource ? `· 來源：${displaySource}` : ''}</div>
                             <div style="font-size:13px;color:#ffb070;margin-top:6px;"></div>
