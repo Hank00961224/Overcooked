@@ -24,27 +24,20 @@
     <h2>上傳你本身以及服裝的照片來看看試穿在身上的效果怎麼樣吧!</h2>
     <p>本身以及服裝的照片要<strong>盡量清晰一點</strong>，並且<strong>背景盡量要單純、光線充足</strong>。</p>
     </section>
-    <section class="example">
-    <div class="word">
-    <h4>範</h4>
-    <h4>例</h4>
-    </div>
-    <img src="images/00017_00.jpg" alt="人體照片範例"><img src="images/02305_00.jpg" alt="衣服照片範例">
 
-    </section>
 
     <div class="video-container">
 
         <div class="video-item">
             <h3 class="video-title">穿搭推薦示範</h3>
-            <video controls>
+            <video class="auto-play-video" muted playsinline controls>
                 <source src="images/1.mp4" type="video/mp4">
             </video>
         </div>
 
         <div class="video-item">
             <h3 class="video-title">虛擬試衣間示範</h3>
-            <video controls>
+            <video class="auto-play-video" muted playsinline controls>
                 <source src="images/12311.mp4" type="video/mp4">
             </video>
         </div>
@@ -56,5 +49,30 @@
     <footer>
     <p>&copy; 2024 超會搭. 版權所有.</p>
     </footer>
+        <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const videos = document.querySelectorAll(".auto-play-video");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+
+                    if (entry.intersectionRatio === 1) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            {
+                threshold: 1.0  // ⭐ 100% 進入畫面才觸發
+            }
+        );
+
+        videos.forEach(video => observer.observe(video));
+    });
+    </script>
+
 </body>
 </html>

@@ -50,27 +50,55 @@
     <li>透過在訓練中引入外裝丟棄機制，讓模型學會在有無服裝特徵輸入時都能生成圖像。這在推理時啟用的分類器無引導機制，允許用戶透過調節 引導係數來控制服裝特徵的影響強度，讓試穿效果更符合用戶的偏好。</li>
     </ul>
     </div>
+    <img src="images/0789.png" alt="照片換衣流程圖" class="intro-img">
     <div class="intro4">
     <p>OOTDiffusion 支援生成高達 1024*768 像素的高解析度圖像，這是實現商業級虛擬試穿效果的關鍵。</p>
-    <p>同時，我們還有<strong>穿搭推薦功能</strong>以及<strong>智慧衣櫃</strong>來搭配<em>超會搭</em>使用<br><strong>穿搭推薦功能</strong>會依據氣候及流行來推薦服飾而<strong>智慧衣櫃</strong>會告訴你被推薦的衣服在哪個衣架上。<br></p>
+    <p>同時，我們還有<strong>穿搭推薦功能</strong>來搭配<em>超會搭</em>使用<strong>穿搭推薦功能</strong>會依據氣候及流行來推薦服飾。</p>
     </div>
-    <img src="images/流程.png" alt="照片換衣流程圖" style="width: 100%; height: auto;">
     </section>
 
-    <div class="video-container">
-
+    <section class="video-container">
         <div class="video-item">
-            <h3 class="video-title">原理說明</h3>
-            <video controls>
+            <h3 class="video-title">原理説明</h3>
+            <video class="auto-play-video" muted playsinline controls>
                 <source src="images/2.mp4" type="video/mp4">
             </video>
         </div>
 
-    </div>
+        <div class="video-item">
+            <h3 class="video-title">流程圖</h3>
+            <img src="images/流程.png" alt="照片換衣流程圖" style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;">
+        </div>
+    </section>
 
     </main>
     <footer>
     <p>&copy; 2024 超會搭. 版權所有.</p>
     </footer>
+        <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const videos = document.querySelectorAll(".auto-play-video");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+
+                    if (entry.intersectionRatio === 1) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            {
+                threshold: 1.0  // ⭐ 100% 進入畫面才觸發
+            }
+        );
+
+        videos.forEach(video => observer.observe(video));
+    });
+    </script>
+
 </body>
 </html>

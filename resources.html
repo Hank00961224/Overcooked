@@ -20,6 +20,87 @@
     </nav>
     </header>
     <main>
+        <section class="intro">
+            <p>我們的 3D 重建技術採用先進的 AI 演算法，能夠在極短時間內將一張平面照片轉換成高精度的立體模型。無論是日常物品、服飾配件或複雜的物體，都能透過簡單的上傳流程快速生成可用的 3D 檔案，大幅降低傳統 3D 建模的技術門檻。</p>
+
+            <h3 style="grid-column: span 2; color: #65aae2; font-size: clamp(24px, 4vw, 32px); margin-top: 20px;">重建過程三步驟</h3>
+
+            <div class="intro1">
+                <h4>Step 1: 輸入</h4>
+                <p style="color: #666; margin-bottom: 15px;">上傳一張背景乾淨的照片</p>
+                <p></p>
+                <p>首先，我們的AI視覺系統會掃描整張照片，精確識別出主體物體的邊界。它會自動分析：物體的顏色分布、紋理特徵、光線反射情況，以及與背景的差異。通過高度精準的演算法，系統能夠去除雜亂背景，只留下核心的物體資訊，為後續的 3D 重建奠定基礎。</p>
+            </div>
+
+            <div class="intro2">
+                <h4>Step 2: 重建</h4>
+                <p style="color: #666; margin-bottom: 15px;">AI 推算物體的空間幾何結構</p>
+                <p></p>
+                <p>這是最核心的步驟。系統會將 2D 影像資訊轉換為 3D 空間座標，推算出物體的深度、厚度與立體結構。同時生成網格（Mesh），這是一種由無數個小三角形組成的 3D 框架，用來定義物體的外形與輪廓。整個過程涉及複雜的數學計算與神經網路推斷。</p>
+            </div>
+
+
+            <div class="intro3">
+                <h4>Step 3: 輸出</h4>
+                <p style="color: #666; margin-bottom: 15px;">下載標準 3D 檔案（如 OBJ, GLB）</p>
+                <p></p>
+                <p>最後的輸出階段，系統將 AI 推算出的 3D 資料轉換成業界標準的檔案格式，如 OBJ、GLB 或 USDZ。這些檔案可以直接匯入 Blender、Maya、Unreal Engine 等專業 3D 軟體，或在 AR 應用中即時使用，讓你的數位創意立即成形。</p>
+            </div>
+
+            <img src="images/0123.png" alt="技術流程圖" class="intro-img">
+
+            <div class="intro4">
+                <h4 style="color: #e4d31f; font-size: clamp(20px, 3vw, 28px);">為什麼這項技術很強大？</h4>
+                <p><strong>⚡ 極速重建：</strong>就像拍照一樣快，只需 15 秒內就能生成完整的 3D 模型。告別傳統 3D 建模動輒數小時甚至數天的漫長等待。</p>
+                <p><strong>🎯 低門檻創作：</strong>你不需要懂複雜的 3D 建模、雕刻或渲染技術，只要會拍照就能創作高精度 3D 資產。民主化的 3D 工具，人人都能成為創意者。</p>
+                <p><strong>🔍 高精準度：</strong>即便是複雜的物體，如帶有細節的服飾或多層次的結構，我們的 AI 也能維持合理的比例、精準的尺寸與豐富的細節。</p>
+            </div>
+
+
+            <h3 style="grid-column: span 2; color: #65aae2; font-size: clamp(24px, 4vw, 32px); margin-top: 30px;">背後的技術原理</h3>
+
+            <div class="intro1">
+                <h4>1. 空間想像力</h4>
+                <p><strong>補全看不見的面</strong></p>
+                <p>當你給 AI 一張椅子正面照時，它並不是單純地「拉伸」或「複製」圖片。我們的系統已經從數百萬個真實 3D 物體的數據中學習，因此具備了強大的「空間想像力」。</p>
+                <p>它能自動推斷出：</p>
+                <ul>
+                    <li>椅子的背面長什麼樣子？</li>
+                    <li>底部是否有橫桿或其他支撐結構？</li>
+                    <li>物體的厚度、比例與細節尺寸？</li>
+                    <li>隱藏面的紋理與材質特性？</li>
+                </ul>
+                <p>這種能力讓 AI 能夠從單一視角就推導出完整的三維結構。</p>
+            </div>
+
+            <div class="intro2">
+                <h4>2. 視角轉換</h4>
+                <p><strong>從平面影像到立體模型</strong></p>
+                <p>AI 會將你的原始照片轉換成一種名為「三平面（Triplane）」的進階數位結構。你可以把它想像成 AI 在腦中為這個物體建立了三個垂直的座標參考面：</p>
+                <ul>
+                    <li><strong>正面圖：</strong>物體的前後深度資訊</li>
+                    <li><strong>側面圖：</strong>物體的左右寬度資訊</li>
+                    <li><strong>俯視圖：</strong>物體的上下高度資訊</li>
+                </ul>
+                <p>這三個維度的資訊相互結合，形成完整的 3D 座標系統，讓 AI 能精確定位物體空間中的每一個點。</p>
+            </div>
+
+            <div class="intro3">
+                <h4>3. 高速渲染</h4>
+                <p><strong>秒級生成立體模型</strong></p>
+                <p>傳統的 3D 生成技術（如光線追蹤）需要反覆運算數百或數千次，速度極其緩慢。我們採用的優化技術革新了整個計算路徑。</p>
+                <p>關鍵改進：</p>
+                <ul>
+                    <li><strong>直接預測：</strong>不是逐像素逐步「畫出」模型，而是透過前饋神經網路直接預測最終結果</li>
+                    <li><strong>並行處理：</strong>利用 GPU 的並行運算能力，同時計算多個區塊</li>
+                    <li><strong>自適應優化：</strong>根據物體複雜度動態調整計算資源</li>
+                </ul>
+                <p>結果就是：在短短 15 秒內就能產出具有高度深度信息的立體模型，比傳統方法快 100 倍以上！</p>
+            </div>
+
+            <img src="images/0456.png" alt="技術流程圖" class="intro-img">
+
+        </section>
     </main>
     <footer>
     <p>&copy; 2024 超會搭. 版權所有.</p>

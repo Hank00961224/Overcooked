@@ -11,16 +11,59 @@
             list-style: none;
             padding-left: 0;
             margin-left: 0;
-            display: flex;
-            gap: 24px;
-            flex-wrap: wrap;
-            align-items: flex-start;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px 80px;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .aboutus .member {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 200px; /* 固定寬度讓每組一致 */
+            width: 100%;
+        }
+        .aboutus .team-photo {
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        .aboutus .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .member-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px 0;
+            width: 500px;
+        }
+        .member-name {
+            font-size: clamp(22px, 3.5vw, 32px);
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: left;
+        }
+        .member-description {
+            font-size: clamp(16px, 2.2vw, 20px);
+            line-height: 1.9;
+            color: #555;
+            text-align: left;
+        }
+        .aboutus h2 {
+            font-size: clamp(28px, 5vw, 40px);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .aboutus > p {
+            font-size: clamp(16px, 2.5vw, 22px);
+            font-weight: 500;
+            margin-bottom: 30px;
         }
 
     </style>
@@ -44,20 +87,44 @@
     <p>我們是一個由四位大安高工電機科的學生組成的團隊</p>
     <ul>
         <li class="member">
-            <div>組長:謝嘉安</div>
             <div class="team-photo"><img src="images/234.jpg" alt="組照 234"></div>
+            <div class="member-info">
+                <div class="member-name">組長：謝嘉安</div>
+                <div class="member-description">
+                    負責專題的整體規劃與協調，統籌團隊資源，確保專題進度順利進行。<br>
+                    擅長系統整合與專案管理。
+                </div>
+            </div>
         </li>
         <li class="member">
-            <div>組員:何承翰</div>
             <div class="team-photo"><img src="images/456.jpg" alt="組照 456"></div>
+            <div class="member-info">
+                <div class="member-name">組員：何承翰</div>
+                <div class="member-description">
+                    負責前端開發與使用者介面設計，打造流暢的使用者體驗。<br>
+                    專注於網頁設計與互動功能實作。
+                </div>
+            </div>
         </li>
         <li class="member">
-            <div>組員:張立澄</div>
-            <div class="team-photo"><img src="images/789.jpg" alt="組照 789"></div>
+            <div class="team-photo"><img src="images/IMG_3368.jpg" alt="組照 789"></div>
+            <div class="member-info">
+                <div class="member-name">組員：張立澄</div>
+                <div class="member-description">
+                    負責後端系統開發與資料庫管理，確保系統穩定運行。<br>
+                    專長於伺服器架設與API設計。
+                </div>
+            </div>
         </li>
         <li class="member">
-            <div>組員:廖宥銨</div>
             <div class="team-photo"><img src="images/123.jpg" alt="組照 123"></div>
+            <div class="member-info">
+                <div class="member-name">組員：廖宥銨</div>
+                <div class="member-description">
+                    負責AI模型訓練與演算法優化，提升虛擬試衣的準確度與效果。<br>
+                    專注於機器學習與影像處理。
+                </div>
+            </div>
         </li>
     </ul>
     </section>
