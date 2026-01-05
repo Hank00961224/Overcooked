@@ -270,3 +270,31 @@ header h1.special-title {
     top: 0;
     line-height: 80px;
 }
+
+.aboutus .member .team-photo img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.video-item {
+    display: flex;
+    flex-direction: column; /* 文字在上，影片在下 */
+    align-items: center;    /* 水平置中 */
+    flex-wrap: nowrap
+}
+
+.video-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+    color: #333;
+    text-align: center;
+}
+
+.video-item video {
+    width: 50%;      /* 延用你原本的尺寸 */
+    max-width: 100%;
+    height: auto;
+}
