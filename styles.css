@@ -18,6 +18,7 @@ header {
     background-color: #63625cda;
     height: 80px;
     width: 100%;
+    position: relative;
 }
 header ul {
     position: absolute;
